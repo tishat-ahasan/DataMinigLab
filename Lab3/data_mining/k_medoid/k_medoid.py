@@ -119,7 +119,7 @@ while iter<iter_lim:
             # print("paise")
             centroids[cluster_id[i]] = copy.deepcopy(tuples[i])
             assign_cluster()
-    # show_graph()
+    show_graph()
     new_error = calc_error(centroids)
     print(error, new_error)
     if new_error == error:
