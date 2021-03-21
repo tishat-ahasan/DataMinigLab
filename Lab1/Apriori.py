@@ -154,10 +154,10 @@ def Apriori(fname , min_support):
 
 def main():
     print("Generating patterns using Apriori....")
-    fname = 'tr.txt'
+    fname = 'Data/mushroom.txt'
     tracemalloc.start()
     S_Time = time.process_time()
-    min_sup = 0.4
+    min_sup = 0.3
     fp = Apriori(fname,min_sup)
 
     current, peak = tracemalloc.get_traced_memory()
@@ -168,10 +168,11 @@ def main():
     print(dash)
     print('{:<25s}{:>8s}{:>18s}{:>16s}{:>17s}'.format('Dataset', 'min_sup', 'patterns', 'Runtime' , 'Memory'))
     print(dash)
-    print('{:<25s}{:>6.2f}{:>16d}{:>18.3f}{:>18.3f}'.format(fname,min_sup*100,len(fp),E_TIME,MEMORY))
+    print('{:<25s}{:>6.2f}%{:>16d}{:>18.3f}{:>18.3f}'.format(fname,min_sup*100,len(fp),E_TIME,MEMORY))
     # print(dash)
-    for key,value in fp.items():
-    	print(key,"\t",value)
+    # print("\nGenerated patterns:")
+    # for key,value in fp.items():
+    # 	print(key,"\t",value)
     
 
 

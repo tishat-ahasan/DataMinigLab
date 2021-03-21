@@ -21,6 +21,18 @@ class Node:
         for child in list(self.children.values()):
             child.display(ind+1)
 
+def get_data(filename):
+    transactions = []
+    frequency = []
+    
+    file = open(filename, 'r')
+    for line in file:
+        row = line.strip().split(' ')
+        transactions.append(row)
+        frequency.append(1)
+    file.close()
+    return transactions, frequency
+
 def constructTree(transactions, frequency, minSup):
     item_set = defaultdict(int)
     # Counting frequency and create header table
@@ -124,35 +136,28 @@ def fpgrowth(fname, minSupport):
     freqItems = defaultdict(int)
     mineTree(headerTable, MIN_COUNT, "", freqItems)
     return freqItems
-def get_data(filename):
-    transactions = []
-    frequency = []
-    
-    file = open(filename, 'r')
-    for line in file:
-        row = line.strip().split(' ')
-        transactions.append(row)
-        frequency.append(1)
-    file.close()
-    return transactions, frequency
+
 
 def main():
-    fname = 'transactions.txt'
+    print("Generating patterns using FP Growth....")
+    fname = 'Data/mushroom.txt'
     tracemalloc.start()
     S_Time = time.process_time()
-    min_sup = 0.2
+    min_sup = 0.3
     fp = fpgrowth(fname,min_sup)
     current, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
     E_TIME = round(time.process_time()-S_Time,4)
     MEMORY = round(peak/10**6,4)
 
-    dash = '-' * 80
+    dash = '-' * 90
     print(dash)
-    print('{:<20s}{:>8s}{:>18s}{:>16s}{:>17s}'.format('fname', 'min_sup', 'patterns', 'Runtime' , 'Memory'))
+    print('{:<25s}{:>8s}{:>18s}{:>16s}{:>17s}'.format('fname', 'min_sup', 'patterns', 'Runtime' , 'Memory'))
     print(dash)
-    print('{:<20s}{:>6.2f}{:>16d}{:>18.3f}{:>18.3f}'.format(fname,min_sup*100,len(fp),E_TIME,MEMORY))
-    
+    print('{:<25s}{:>6.2f}%{:>16d}{:>18.3f}{:>18.3f}'.format(fname,min_sup*100,len(fp),E_TIME,MEMORY))
+    # print("\nGenerated patterns:")
+    # for key,value in fp.items():
+    #   print(key,"\t",value)
 
 if __name__ == '__main__':
     main()

@@ -1,11 +1,14 @@
+import warnings
+warnings.filterwarnings('always') 
+
 import pandas as pd
 import numpy as np
 import math
 from pprint import pprint
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-import warnings
-warnings.filterwarnings('always')
+# import warnings
+# warnings.filterwarnings('always')
 
 def getData(dataset_name):
     attribute_file_name = 'Data/'+dataset_name+".attribute"
@@ -148,13 +151,16 @@ def test(data,tree, features):
     queries = data[features].to_dict(orient = "records")
     predictions = [predict(query,tree) for query in queries]
     accuracy = accuracy_score(original_data, predictions)
-    precision = precision_score(original_data, predictions, average="macro")
-    recall = recall_score(original_data, predictions, average="macro")
-    f1 = f1_score(original_data, predictions, average="macro")
+    precision = precision_score(original_data, predictions, average="macro",zero_division=1)
+    recall = recall_score(original_data, predictions, average="macro",zero_division=1)
+    f1 = f1_score(original_data, predictions, average="macro",zero_division=1)
     return accuracy*100, precision*100, recall*100, f1*100
 
-attributes, dataset = getData(dataset_name='sample')
+dataset_name = 'iris'
+attributes, dataset = getData(dataset_name=dataset_name)
 print("Data Load successfully!!!")
+print("dataset:",dataset_name)
+print("\n")
 testSize = 0.2
 training_data, testing_data = train_test_split(dataset, test_size = testSize)
 # print(attributes)

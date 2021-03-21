@@ -79,9 +79,9 @@ class NaiveBayesClassifier:
 
 def printStatistics(Y,YPred):
     accuracy = accuracy_score(Y, YPred)*100
-    precision = precision_score(Y, YPred, average="macro")*100
-    recall = recall_score(Y, YPred, average="macro")*100
-    f1 = f1_score(Y, YPred, average="macro")*100
+    precision = precision_score(Y, YPred, average="macro",zero_division=1)*100
+    recall = recall_score(Y, YPred, average="macro",zero_division=1)*100
+    f1 = f1_score(Y, YPred, average="macro",zero_division=1)*100
     
     print("Accuracy:","{:.2f}".format(accuracy),"%")
     print("Precision:","{:.2f}".format(precision),"%")
@@ -89,8 +89,11 @@ def printStatistics(Y,YPred):
     print("F Measure:","{:.2f}".format(f1),"%")
 
 
-attributes, dataset = getData('sample')
+dataset_name = 'iris'
+attributes, dataset = getData(dataset_name)
 print("Data Loading Successfull!!!")
+print("Dataset:",dataset_name)
+print("\n")
 testSize = 0.2
 training_data, testing_data = train_test_split(dataset, test_size = testSize)
 naiveBayesClassifier = NaiveBayesClassifier(training_data, attributes)

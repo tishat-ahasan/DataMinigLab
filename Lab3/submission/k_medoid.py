@@ -96,18 +96,18 @@ def showGraph(loop_num):
         y[len(centroid_index)].append(dataset.iloc[centroid_index[i]]['y'])
     for i in range(len(centroid_index)):
         plt.scatter(x[i],y[i],color=color[i])
-    print("Centroids: ")
+    # print("Centroids: ")
     
     plt.scatter(x[-1],y[-1],color="black")
     filename = "fig_"+str(loop_num)+".png"
-    plt.savefig(filename)
+    # plt.savefig(filename)
     plt.show()
 
 
 
-dataset_name = 'iris'
-k = 3
-groundTruth = True
+dataset_name = 'test'
+k = 4
+groundTruth = False
 if groundTruth:
     dataset,classes,tuple_labels,label_count = getData(dataset_name)
 else:
@@ -130,7 +130,8 @@ while L<10:
     L +=1
     print("Iteration",L,"Variance: ",total_error)
 #         print()
-#     showGraph(L)
+    if dataset_name=='test':
+        showGraph(L)
     Flag = False
     prev_centroid_index = copy.deepcopy(centroid_index)
     for i in range(k):

@@ -108,21 +108,21 @@ def showGraph(loop_num):
         y[len(centroids)].append(centroids[i]['y'])
     for i in range(len(centroids)):
         plt.scatter(x[i],y[i],color=color[i])
-    print("Centroids: ")
-    print(x[-1],y[-1])
+    # print("Centroids: ")
+    # print(x[-1],y[-1])
     
     plt.scatter(x[-1],y[-1],color="black")
     filename = "fig_"+str(loop_num)+".png"
 #     print(filename)
-    plt.savefig(filename)
+    # plt.savefig(filename)
     plt.show()
 
 
 
 
-dataset_name = 'iris'
-k = 3
-groundTruth = True
+dataset_name = 'test'
+k = 4
+groundTruth = False
 if groundTruth:
     dataset,classes,tuple_labels,label_count = getData(dataset_name)
 else:
@@ -150,9 +150,10 @@ loop_num = 0
 
 while True:
     loop_num += 1
-    
     continue_loop = assignCluster()
     newError = calculateError()
+    if dataset_name=='test':
+        showGraph(loop_num)
     print("Iteration",loop_num,"Variance: ",newError)
     newCentroids()
     if continue_loop == False or loop_num>20:
